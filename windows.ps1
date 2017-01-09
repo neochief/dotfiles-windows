@@ -13,12 +13,12 @@ if (!(Verify-Elevated)) {
 ###############################################################################
 
 # Set Computer Name
-(Get-WmiObject Win32_ComputerSystem).Rename("CHOZO") | Out-Null
+(Get-WmiObject Win32_ComputerSystem).Rename("NEOCHIEF-PC") | Out-Null
 
 ## Set DisplayName for my account. Use only if you are not using a Microsoft Account
 #$myIdentity=[System.Security.Principal.WindowsIdentity]::GetCurrent()
 #$user = Get-WmiObject Win32_UserAccount | Where {$_.Caption -eq $myIdentity.Name}
-#$user.FullName = "Jay Harris
+#$user.FullName = "Alexander Shvets"
 #$user.Put() | Out-Null
 #Remove-Variable user
 #Remove-Variable myIdentity
@@ -36,6 +36,9 @@ powercfg /hibernate off
 
 # Power: Set standby delay to 24 hours
 powercfg /change /standby-timeout-ac 1440
+
+# TODO: Do sleep when media sharing is on.
+# ...
 
 # SSD: Disable SuperFetch
 Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" "EnableSuperfetch" 0
@@ -142,7 +145,7 @@ Get-AppxPackage "Microsoft.People" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.Windows.Photos" | Remove-AppxPackage
 
 # Uninstall Skype
-Get-AppxPackage "Microsoft.SkypeApp" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.SkypeApp" | Remove-AppxPackage
 
 # Uninstall Solitaire
 Get-AppxPackage "Microsoft.MicrosoftSolitaireCollection" | Remove-AppxPackage
