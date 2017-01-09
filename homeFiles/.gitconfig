@@ -95,3 +95,6 @@
 
 [push]
     default = simple
+[user]
+	email = neochief@shvetsgroup.com
+	name = Alexander Shvets

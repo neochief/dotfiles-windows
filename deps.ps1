@@ -34,6 +34,7 @@ cinst Fiddler4
 cinst nodejs.install
 cinst ruby
 cinst babun
+cinst pscx
 
 # other
 #cinst wincommandpaste # Copy/Paste is supported natively in Win10
