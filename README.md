@@ -1,6 +1,6 @@
 ﻿# Jay Harris's dotfiles for Windows
 
-A collection of PowerShell files for Windows, including common application installation through `Chocolatey` and `npm`, and developer-minded Windows configuration defaults. 
+A collection of PowerShell files for Windows, including common application installation through `Chocolatey` and `npm`, and developer-minded Windows configuration defaults.
 
 Are you a Mac user? Check out my [dotfiles](https://github.com/neochief/dotfiles) repository.
 
@@ -80,35 +80,11 @@ When setting up a new Windows box, you may want to install some common packages,
 > Extensions will be installed into your most current version of Visual Studio. You can also install additional plugins at any time via `Install-VSExtension $url`. The Url can be found on the gallery; it's the extension's `Download` link url.
 
 
+### PHPStorm and Babun
 
-## Forking your own version
+In order to get Babun shell as a terminal in PHPStom, go into File > Settings > Tools > Terminal and put the path to "babun-embed.bat" into the "Shell path" field.
 
-This repository is built around how I use Windows, which is predominantly in a VM hosted on OS X. As such, things like VNC, FileZilla, or Skype are not installed, as they are available to me on the OS X side, installed by my [OS X dotfiles](https://github.com/neochief/dotfiles). If you are using Windows as your primary OS, you may want a different configuration that reflects that, and I recommend you [fork this repository](https://github.com/jayharris/dotfiles-windows/fork).
 
-If you do fork for your own custom configuration, you will need to touch a few files to reference your own repository, instead of mine.
-
-Within `/setup/install.ps1`, modify the Repository variables.
-```posh
-$account = "jayharris"
-$repo    = "dotfiles-windows"
-$branch  = "master"
-```
-
-Within the Windows Defaults file, `/windows.ps1`, modify the Machine
-name on the first line.
-```posh
-(Get-WmiObject Win32_ComputerSystem).Rename("MyMachineName") | Out-Null
-```
-
-Finally, be sure to reference your own repository in the git-free installation command.
-```bash
-iex ((new-object net.webclient).DownloadString('https://raw.github.com/$account/$repo/$branch/setup/install.ps1'))
-```
-
-## Feedback
-
-Suggestions/improvements are
-[welcome and encouraged](https://github.com/jayharris/dotfiles-windows/issues)!
 
 ## Author
 

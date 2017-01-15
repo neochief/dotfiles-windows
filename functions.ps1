@@ -1,6 +1,15 @@
 # Basic commands
 function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select-Object Definition }
 function touch($file) { "" | Out-File $file -Encoding ASCII }
+function homestead() {
+  cd ~/Homestead
+  vagrant ssh
+}
+function dot() {
+  cd ~/dotfiles-windows
+  . ./bootstrap.ps1
+  cd ~
+}
 
 # Common Editing needs
 function Edit-Hosts { Invoke-Expression "sudo $(if($env:EDITOR -ne $null)  {$env:EDITOR } else { 'notepad' }) $env:windir\system32\drivers\etc\hosts" }
@@ -211,4 +220,3 @@ function Unzip-File {
         }
     }
 }
-
