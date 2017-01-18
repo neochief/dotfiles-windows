@@ -29,11 +29,6 @@ cinst Opera
 
 # dev tools and frameworks
 cinst atom
-cinst hg
-cinst Fiddler4
-cinst nodejs.install
-cinst ruby
-cinst babun
 cinst pscx
 
 # other
