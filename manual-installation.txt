@@ -1,0 +1,8 @@
+https://www.jetbrains.com/phpstorm/download/
+https://nodejs.org/en/
+https://creative.adobe.com/products/download/photoshop
+
+
+### PHPStorm and Babun
+
+In order to get Babun shell as a terminal in PHPStom, go into File > Settings > Tools > Terminal and put the path to "babun-embed.bat" into the "Shell path" field.
