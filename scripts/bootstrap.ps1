@@ -9,6 +9,9 @@
 # 8. Homestead?
 # 9. TortoiseGit settings?
 
+function Check-Command($cmdname) {
+    return [bool](Get-Command -Name $cmdname -ErrorAction SilentlyContinue)
+}
 
 function Verify-Elevated {
     # Get the ID and security principal of the current user account
@@ -64,7 +67,7 @@ else {
   git clone git@github.com:neochief/dotfiles-windows.git $env:dot
 }
 
-& "$env:dot\scripts\psProfile\Microsoft.PowerShell_profile.ps1"
+. $env:dot\scripts\psProfile\profile.ps1
 
 
 ### Link PowerShell profile
