@@ -64,7 +64,7 @@ else {
   git clone git@github.com:neochief/dotfiles-windows.git $env:dot
 }
 
-& "$env:dot\scripts\psProfile\profile.ps1"
+& "$env:dot\scripts\psProfile\Microsoft.PowerShell_profile.ps1"
 
 
 ### Link PowerShell profile
