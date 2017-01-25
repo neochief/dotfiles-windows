@@ -6,8 +6,6 @@ Are you a Mac user? Check out my [dotfiles](https://github.com/neochief/dotfiles
 
 ## Installation
 
-Press Cmd+R and run this:
-
 ```
 powershell -Command "Start-Process PowerShell -ArgumentList ('-ExecutionPolicy RemoteSigned -Command iwr https://raw.githubusercontent.com/neochief/dotfiles-windows/master/scripts/bootstrap.ps1 -UseBasicParsing | iex') -Verb RunAs"
 ```

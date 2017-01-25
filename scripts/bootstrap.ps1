@@ -46,7 +46,7 @@ if (!(Check-Command -cmdname "git")) {
   Refresh-Environment
 }
 
-ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts  >$null 2>&1
+ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts
 
 if (Test-Path $env:dot) {
   echo ""
@@ -80,7 +80,7 @@ echo "Working on HOME"
 ### Installs
 echo ""
 echo "Working on INSTALLS"
-#. $env:dot/scripts/do-apps.ps1
+. $env:dot/scripts/do-apps.ps1
 
 ### System config
 echo ""
