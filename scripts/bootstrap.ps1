@@ -1,18 +1,22 @@
+# TODO:
+# 1. Editor env variable.
+# 2. Atom editor for all text files.
+# 3. Default PHPStorm config.
+# 4. Link .atom to home
+# 5. https://www.tenforums.com/tutorials/8744-default-app-associations-export-import-new-users-windows.html
+# 6. Recheck web install from readme.
+# 7. Extract neochief credentials.
+# 8. Homestead?
+
+
+
+
 $DOT = "$env:USERPROFILE\.dotfiles-windows"
 
 #-------------------------------------------------------------------------------
 
-function Reload-Path-Env() {
-  $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-}
-
-function Verify-Elevated {
-    # Get the ID and security principal of the current user account
-    $myIdentity=[System.Security.Principal.WindowsIdentity]::GetCurrent()
-    $myPrincipal=new-object System.Security.Principal.WindowsPrincipal($myIdentity)
-    # Check to see if we are currently running "as Administrator"
-    return $myPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
-}
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+& "$scriptDir\psProfile\profile.ps1"
 
 # Check to see if we are currently running "as Administrator"
 if (!(Verify-Elevated)) {
@@ -20,19 +24,26 @@ if (!(Verify-Elevated)) {
    $newProcess.Arguments = $myInvocation.MyCommand.Definition;
    $newProcess.Verb = "runas";
    [System.Diagnostics.Process]::Start($newProcess);
-
    exit
 }
 
 #-------------------------------------------------------------------------------
 
-### FIRST BOOT
+### Install chocolatey and git at first boot.
 cd $env:USERPROFILE
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
-choco install -r -y git -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
-Reload-Path-Env
+
+if (!(Check-Command -cmdname "choco")) {
+  iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+}
+
+if (!(Check-Command -cmdname "git")) {
+  choco install -r -y git -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
+  Refresh-Environment
+}
+
 ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts
-if (Test-Path $config) {
+
+if (Test-Path $DOT) {
  cd $DOT
  git stash
  git pull --rebase
@@ -46,10 +57,8 @@ else {
 ### Link PowerShell profile
 . $DOT/scripts/do-ps-profile.ps1
 
-
 ### Link home directory files
 . $DOT/scripts/do-home.ps1
-
 
 ### Installs
 . $DOT/scripts/do-apps.ps1
@@ -57,4 +66,4 @@ else {
 ### System config
 . $DOT/scripts/do-sys-config.ps1
 
-pause
+sudo

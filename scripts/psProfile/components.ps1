@@ -3,6 +3,6 @@
 Push-Location (Join-Path (Split-Path -parent $profile) "components")
 
 # From within the ./components directory...
-#. .\coreaudio.ps1
+. .\console.ps1
 
 Pop-Location

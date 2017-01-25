@@ -3,21 +3,23 @@
 # 2. Run all reg files.
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$configRoot = Join-Path -Path $scriptDir -ChildPath sys-config | dir
+$configRoot = Join-Path -Path $scriptDir -ChildPath sys-config
 
-foreach ($configDir in $configRoot) {
-  $config = Join-Path -Path $configDir.FullName -ChildPath config.ps1
-  $exists = Test-Path $config
-  if ($exists) {
-     echo "Running config: '$($configDir.Name)/config.ps1'"
-     & $config
-  }
+$oldLocation = Get-Location
+Set-Location $configRoot
 
-  $registryPatches = Join-Path -Path $configDir.FullName -ChildPath *.reg
-  Get-ChildItem $registryPatches -Filter *.reg | Foreach-Object {
-      echo "Applying patch: '$($configDir.Name)/$($_.Name)'"
-      reg import $_.FullName >$null 2>&1
-  }
+Get-ChildItem $configRoot -recurse -filter config.ps1 | Foreach-Object {
+  $itemPath = $_.FullName | Resolve-Path -Relative
+  echo "Running config: $itemPath"
+  & $_.FullName
 }
+
+Get-ChildItem $configRoot -recurse -filter *.reg | Foreach-Object {
+  $itemPath = $_.FullName | Resolve-Path -Relative
+  echo "Applying patch: $itemPath"
+  reg import $_.FullName >$null 2>&1
+}
+
+Set-Location $oldLocation
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."

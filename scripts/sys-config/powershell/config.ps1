@@ -67,12 +67,17 @@ function Convert-ConsoleColor {
 
 if (Get-Command Convert-ConsoleColor -errorAction SilentlyContinue)
 {
+  New-PSDrive HKU Registry HKEY_USERS | Out-Null
   @(`
-  "HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe",`
-  "HKCU:\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe",`
-  "HKCU:\Console\Windows PowerShell (x86)",`
-  "HKCU:\Console\Windows PowerShell",`
-  "HKCU:\Console"`
+    "HKU:\S-1-5-19\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe",`
+    "HKU:\S-1-5-19\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe",`
+    "HKU:\S-1-5-20\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe",`
+    "HKU:\S-1-5-20\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe",`
+    "HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe",`
+    "HKCU:\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe",`
+    "HKCU:\Console\Windows PowerShell (x86)",`
+    "HKCU:\Console\Windows PowerShell",`
+    "HKCU:\Console"`
   ) | ForEach {
     If (!(Test-Path $_)) {
         New-Item -path $_ -ItemType Folder | Out-Null

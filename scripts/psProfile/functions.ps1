@@ -1,19 +1,21 @@
 # Basic commands
 function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select-Object Definition }
 function touch($file) { "" | Out-File $file -Encoding ASCII }
+
 function homestead() {
   cd ~/Homestead
   vagrant ssh
 }
+
 function dot() {
   cd ~/dotfiles-windows
-  . ./bootstrap.ps1
+  . ./scripts/bootstrap.ps1
   cd ~
 }
 
 # Common Editing needs
-function Edit-Hosts { Invoke-Expression "sudo $(if($env:EDITOR -ne $null)  {$env:EDITOR } else { 'notepad' }) $env:windir\system32\drivers\etc\hosts" }
-function Edit-Profile { Invoke-Expression "$(if($env:EDITOR -ne $null)  {$env:EDITOR } else { 'notepad' }) $profile" }
+function Edit-Hosts { Invoke-Expression "sudo $(if($env:EDITOR -ne $null)  { $env:EDITOR } else { 'notepad' }) $env:windir\system32\drivers\etc\hosts" }
+function Edit-Profile { Invoke-Expression "$(if($env:EDITOR -ne $null)  { $env:EDITOR } else { 'notepad' }) $profile" }
 
 # Sudo
 function sudo() {
@@ -132,6 +134,27 @@ function Convert-ToDiskSize {
         }
         else { $bytes /= 1KB }
     }
+}
+
+function Exists($item) {
+  return Test-Path $item
+}
+
+function Is-Dir($item) {
+  return (Exists $item) -and ((Get-Item $item) -is [System.IO.DirectoryInfo])
+}
+
+function Is-Link($item) {
+  $info = Get-Item $item -Force -ea 0
+  return [bool]($info.Attributes -band [IO.FileAttributes]::ReparsePoint)
+}
+
+function Is-File($item) {
+  return (Exists $item) -and (! (Is-Dir $item))
+}
+
+function Check-Command($cmdname) {
+    return [bool](Get-Command -Name $cmdname -ErrorAction SilentlyContinue)
 }
 
 # Start IIS Express Server with an optional path and port
