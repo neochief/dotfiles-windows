@@ -1,6 +1,9 @@
-# Foreach subdirectory:
-# 1. Run config file.
-# 2. Run all reg files.
+###############################################################################
+### System Configuration
+###############################################################################
+
+# This script will recursively scan sys-config directory for config.ps1
+# and *.reg files and execute them.
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $configRoot = Join-Path -Path $scriptDir -ChildPath sys-config
@@ -22,4 +25,9 @@ Get-ChildItem $configRoot -recurse -filter *.reg | Foreach-Object {
 
 Set-Location $oldLocation
 
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+# Restart explorer
+taskkill /IM explorer.exe /F  >$null 2>&1
+explorer.exe
+
+echo ""
+echo "Done. Note that some of these changes may require a logout/restart to take effect."

@@ -3,14 +3,12 @@ function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select
 function touch($file) { "" | Out-File $file -Encoding ASCII }
 
 function homestead() {
-  cd ~/Homestead
+  cd $home\homestead
   vagrant ssh
 }
 
 function dot() {
-  cd ~/dotfiles-windows
-  . ./scripts/bootstrap.ps1
-  cd ~
+  Invoke-Expression "$env:dot\scripts\bootstrap.ps1"
 }
 
 # Common Editing needs

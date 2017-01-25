@@ -6,22 +6,8 @@ Are you a Mac user? Check out my [dotfiles](https://github.com/neochief/dotfiles
 
 ## Installation
 
-1. Press Cmd+R and run this:
-```
-powershell -Command "Start-Process PowerShell -ArgumentList ('-ExecutionPolicy RemoteSigned') -Verb RunAs"
-```
+Press Cmd+R and run this:
 
-2. Copy following to PowerShell:
 ```
-cd ~
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
-$env:HOME = $Home
-$env:NOCHECK = "true"
-choco install babun -y --allow-empty-checksums
-choco install git -y -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts
-git clone git@github.com:neochief/dotfiles-windows.git .dotfiles-windows
-cd .dotfiles-windows
-. ./bootstrap.ps1
+powershell -Command "Start-Process PowerShell -ArgumentList ('-ExecutionPolicy RemoteSigned -Command iwr https://raw.githubusercontent.com/neochief/dotfiles-windows/master/scripts/bootstrap.ps1 -UseBasicParsing | iex') -Verb RunAs"
 ```

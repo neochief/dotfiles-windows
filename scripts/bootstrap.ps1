@@ -7,25 +7,26 @@
 # 6. Recheck web install from readme.
 # 7. Extract neochief credentials.
 # 8. Homestead?
+# 9. TortoiseGit settings?
 
 
+function Verify-Elevated {
+    # Get the ID and security principal of the current user account
+    $myIdentity=[System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $myPrincipal=new-object System.Security.Principal.WindowsPrincipal($myIdentity)
+    # Check to see if we are currently running "as Administrator"
+    return $myPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
+}
 
-
-$DOT = "$env:USERPROFILE\.dotfiles-windows"
+if (! (Verify-Elevated)) {
+  echo "THIS SCRIPT SHOULD BE RUN AS ADMINISTRATOR."
+  pause
+  exit
+}
 
 #-------------------------------------------------------------------------------
 
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-& "$scriptDir\psProfile\profile.ps1"
-
-# Check to see if we are currently running "as Administrator"
-if (!(Verify-Elevated)) {
-   $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
-   $newProcess.Arguments = $myInvocation.MyCommand.Definition;
-   $newProcess.Verb = "runas";
-   [System.Diagnostics.Process]::Start($newProcess);
-   exit
-}
+[Environment]::SetEnvironmentVariable("dot", "$env:USERPROFILE\.dotfiles-windows", "User")
 
 #-------------------------------------------------------------------------------
 
@@ -33,37 +34,57 @@ if (!(Verify-Elevated)) {
 cd $env:USERPROFILE
 
 if (!(Check-Command -cmdname "choco")) {
+  echo ""
+  echo "INSTALLING PACKAGE MANAGE"
   iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 }
 
 if (!(Check-Command -cmdname "git")) {
+  echo ""
+  echo "INSTALLING GIT"
   choco install -r -y git -params '"/GitAndUnixToolsOnPath /NoShellIntegration"'
   Refresh-Environment
 }
 
-ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts
+ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts  >$null 2>&1
 
-if (Test-Path $DOT) {
- cd $DOT
- git stash
- git pull --rebase
- git stash apply
+if (Test-Path $env:dot) {
+  echo ""
+  echo "UPDATING .DOTFILES"
+
+  cd $env:dot
+  git stash
+  git pull --rebase
+  git stash apply
 }
 else {
-  git clone git@github.com:neochief/dotfiles-windows.git $DOT
+  echo ""
+  echo "PULLING .DOTFILES"
+
+  git clone git@github.com:neochief/dotfiles-windows.git $env:dot
 }
+
+& "$env:dot\scripts\psProfile\profile.ps1"
 
 
 ### Link PowerShell profile
-. $DOT/scripts/do-ps-profile.ps1
+echo ""
+echo "Working on PROFILE"
+. $env:dot/scripts/do-ps-profile.ps1
 
 ### Link home directory files
-. $DOT/scripts/do-home.ps1
+echo ""
+echo "Working on HOME"
+. $env:dot/scripts/do-home.ps1
 
 ### Installs
-. $DOT/scripts/do-apps.ps1
+echo ""
+echo "Working on INSTALLS"
+#. $env:dot/scripts/do-apps.ps1
 
 ### System config
-. $DOT/scripts/do-sys-config.ps1
+echo ""
+echo "Working on SYSTEM CONFIGURATION"
+. $env:dot/scripts/do-sys-config.ps1
 
 sudo
