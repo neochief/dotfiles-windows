@@ -1,6 +1,9 @@
 https://nodejs.org/en/
 https://creative.adobe.com/products/download/photoshop
+https://www.visualstudio.com/post-download-vs/?sku=community&clcid=0x409&telem=ga
 
+https://www.jetbrains.com/phpstorm/download/ (Doesn't make sense to install through choco, because you will manually update when new release comes out)
+https://www.jetbrains.com/idea/download/download-thanks.html (Doesn't make sense to install through choco, because you will manually update when new release comes out)
 
 ### PHPStorm and Babun
 
