@@ -2,7 +2,7 @@
 
 A collection of PowerShell files for Windows, including common application installation through `Chocolatey` and `npm`, and developer-minded Windows configuration defaults.
 
-Are you a Mac user? Check out my [dotfiles](https://github.com/neochief/dotfiles) repository.
+Are you a Mac user? Check out my [dotfiles](https://github.com/neochief/dotfiles-mac) repository.
 
 ## Installation
 
