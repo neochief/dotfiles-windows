@@ -56,9 +56,7 @@ if (Test-Path $env:dot) {
   echo "UPDATING .DOTFILES"
 
   cd $env:dot
-  git stash
   git pull --rebase
-  git stash apply
 }
 else {
   echo ""
