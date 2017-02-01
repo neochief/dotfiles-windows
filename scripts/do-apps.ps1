@@ -1,4 +1,4 @@
-d # Babun install
+# Babun install
 $env:HOME = $Home
 $env:NOCHECK = "true"
 choco install -y -r babun --allow-empty-checksums
@@ -15,7 +15,7 @@ choco install -y -r pscx
 choco install -y -r git
 choco install -y -r poshgit
 choco install -y -r tortoisegit
-choco install -y -r python
+choco install -y -r python2
 choco install -y -r vagrant
 choco install -y -r virtualbox
 vagrant plugin install vagrant-vbguest
