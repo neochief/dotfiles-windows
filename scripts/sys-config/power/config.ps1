@@ -1,5 +1,6 @@
 # You can export your current power settings with following commands:
-# powercfg -export ~/.dotfiles-windows/scripts/sys-config/power/PowerConfig.pow
+# powercfg /GETACTIVESCHEME
+# powercfg -export $env:UserProfile/.dotfiles-windows/scripts/sys-config/power/PowerConfig.pow {GUID}
 
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
