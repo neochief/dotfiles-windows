@@ -10,7 +10,6 @@ choco install -y -r Firefox
 choco install -y -r Opera
 
 # Dev tools and frameworks
-choco install -y -r atom
 choco install -y -r pscx
 choco install -y -r git
 choco install -y -r poshgit

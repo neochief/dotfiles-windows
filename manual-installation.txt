@@ -2,8 +2,8 @@ https://atom.io/ - Choco does not properly register Atom as application, which m
 https://nodejs.org/en/ - Choco has outdated version of Node.js (this may change in future).
 https://creative.adobe.com/products/download/photoshop - Choco is outdated.
 
-https://www.jetbrains.com/phpstorm/download/ (Doesn't make sense to install through choco, because you will manually update when new release comes out)
-https://www.jetbrains.com/idea/download/download-thanks.html (Doesn't make sense to install through choco, because you will manually update when new release comes out)
+https://www.jetbrains.com/phpstorm/download/ - Doesn't make sense to install through choco, because you will manually update when new release comes out
+https://www.jetbrains.com/idea/download/download-thanks.html - Doesn't make sense to install through choco, because you will manually update when new release comes out
 
 ### PHPStorm and Babun
 
