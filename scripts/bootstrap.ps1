@@ -49,9 +49,10 @@ if (!(Check-Command -cmdname "git")) {
   Refresh-Environment
 }
 
+New-Item -ItemType Directory -Force -Path ~\.ssh
 ssh-keyscan github.com | out-file -encoding ASCII ~\.ssh\known_hosts
 
-if (Test-Path $env:dot) {
+if (Test-Path $env:dot) {   
   echo ""
   echo "UPDATING .DOTFILES"
 
@@ -62,7 +63,7 @@ else {
   echo ""
   echo "PULLING .DOTFILES"
 
-  git clone git@github.com:neochief/dotfiles-windows.git $env:dot
+  git clone https://github.com/neochief/dotfiles-windows.git $env:dot
 }
 
 . $env:dot\scripts\psProfile\profile.ps1
